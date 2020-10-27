@@ -1,5 +1,5 @@
 # fabric-tokens-cc
-Implementation of varius tokens for hyperledger fabric in javascript.
+Implementation of various tokens for hyperledger fabric in javascript.
 
 ## eip20
 https://eips.ethereum.org/EIPS/eip-20
