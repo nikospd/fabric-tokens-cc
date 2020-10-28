@@ -36,7 +36,7 @@ class eip19 extends eip20{
         const walletOwnerId = new ClientIdentity(ctx.stub).getMSPID();
         let fundAuthValue = await ctx.stub.getState(`${walletOwnerId}Fund${ordererId}`);
         fundAuthValue = fundAuthValue.toString();
-        if (fundAuthValue === "false"){throw new Error("Address is already unauthorized orderer");}
+        if (fundAuthValue.toString() === "false"){throw new Error("Address is already unauthorized orderer");}
         fundAuthValue = "false";
         await ctx.stub.putState(`${walletOwnerId}Fund${ordererId}`, Utils.toBuffer(fundAuthValue));
         return true;
@@ -49,7 +49,7 @@ class eip19 extends eip20{
     async orderFundFrom(ctx, operationId, walletToFund, value, instructions){
         const ordererId = new ClientIdentity(ctx.stub).getMSPID();
         const fundOperatorValue = await this.isFundOperatorFor(ctx, walletToFund, ordererId);
-        if (fundOperatorValue === "false"){
+        if (fundOperatorValue.toString() === "false"){
             return false;
         }
         await this.doOrderFund(ctx, operationId, walletToFund, value, instructions);
