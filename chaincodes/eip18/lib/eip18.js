@@ -143,7 +143,7 @@ class eip18 extends Contract{
         }
     }
 
-    //eip199
+    //eip1996
 
     async hold(ctx, operationId, to, notary, value, timeToExpiration){
         Validations.checkMspId(to);
@@ -160,7 +160,7 @@ class eip18 extends Contract{
         Validations.isGreaterThanZero(value);
         Validations.isGreaterThanZero(timeToExpiration);
         const issuerId = new ClientIdentity(ctx.stub).getMSPID();
-        if (await this.isHoldOperatorFor(ctx, issuerId, from) !== "true"){
+        if ((await this.isHoldOperatorFor(ctx, issuerId, from)).toString() !== "true"){
             throw new Error(`${issuerId} is unauthorized to hold on behalf of ${from}`);
         }
         return await this._doHold(ctx, operationId, issuerId, from, to, notary, timeToExpiration, value);
@@ -340,7 +340,7 @@ class eip18 extends Contract{
     //eip18
 
     async orderTransfer(ctx, operationId, to, value){
-        Validations.checkMspId(to);orderTransfer
+        Validations.checkMspId(to);
         Validations.isGreaterThanZero(value);
         const issuerId = new ClientIdentity(ctx.stub).getMSPID();
         return await this._doOrderTransfer(ctx, operationId, issuerId, issuerId, to, value);
@@ -350,7 +350,7 @@ class eip18 extends Contract{
         Validations.checkMspId(to);
         Validations.isGreaterThanZero(value);
         const issuerId = new ClientIdentity(ctx.stub).getMSPID();
-        if (await this.isClearableTransferOperatorFor(ctx, issuerId, from) === "false"){
+        if ((await this.isClearableTransferOperatorFor(ctx, issuerId, from)).toString() === "false"){
             console.error("Unauthorized for order transfer");
             return false;
         }
