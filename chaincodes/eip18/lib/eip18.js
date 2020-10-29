@@ -1,5 +1,4 @@
 /* Holdable Token
-
 The clear transfer order struct
      operationIdClear: {
        issuer,
