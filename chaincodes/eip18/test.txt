@@ -1,7 +1,7 @@
 ./network.sh down
 ./network.sh up createChannel
 
-./network.sh deployCC -ccn eip18 -ccl javascript -ccp /home/nikos/Documents/blockchain/ergasies/fabric-tokens-cc/chaincodes/eip18
+./network.sh deployCC -ccn eip18 -ccl javascript -ccp ${PathOfCC}
 
 export FABRIC_CFG_PATH=$PWD/../config/
 
