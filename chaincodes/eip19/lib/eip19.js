@@ -1,5 +1,4 @@
 /* Fundable Token
-
 The fund order struct
      operationId: {
        orderer,
