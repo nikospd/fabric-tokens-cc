@@ -1,5 +1,5 @@
 /* Payoutable Token
-The fund order struct
+The payout order struct
      operationId: {
        issuerId,
        walletToBePaidOut,
