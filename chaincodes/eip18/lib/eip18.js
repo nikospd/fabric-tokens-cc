@@ -215,8 +215,8 @@ class eip18 extends Contract{
             console.error("Only the notary can execute a hold request");
             return false;
         }
-        if (holdObj["status"] !== "Ordered" || holdObj["status"] !== "Executed"){
-            console.error("A hold can only be released from status Ordered or Executed");
+        if (holdObj["status"] !== "Ordered"){
+            console.error("A hold can only be executed from status Ordered");
             return false;
         }
         if (holdObj["expiration"] !== "0" && new Date() > holdObj["expiration"]){
@@ -360,7 +360,7 @@ class eip18 extends Contract{
         let clearObj = await ctx.stub.getState(`${operationId}Clear`);
         if (clearObj.toString() !== ""){throw new Error(`${operationId} already in use for clear transfer`)}
         const clearingAgent = await ctx.stub.getState("clearingAgent");
-        await this._doHold(ctx, operationId, issuerId, from, to, clearingAgent, "0", value);
+        await this._doHold(ctx, operationId, issuerId, from, to, clearingAgent.toString(), "0", value);
         clearObj = {}
         clearObj["issuer"] = issuerId;
         clearObj["origin"] = from;
