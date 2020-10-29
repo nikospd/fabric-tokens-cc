@@ -207,7 +207,7 @@ class eip19 extends Contract{
             throw new Error("A fund can only be cancelled from status Ordered")
         }
         fundStruct["status"] = "Cancelled";
-        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(bufferedFundStruct)));
+        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(fundStruct)));
         return true;
     }
     async processFund(ctx, operationId){
@@ -217,7 +217,7 @@ class eip19 extends Contract{
             throw new Error("A fund can only be put in process from status Ordered")
         }
         fundStruct["status"] = "InProcess";
-        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(bufferedFundStruct)));
+        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(fundStruct)));
         return true;
     }
     async executeFund(ctx, operationId){
@@ -227,9 +227,9 @@ class eip19 extends Contract{
             throw new Error("A fund can only be executed from status InProcess")
         }
         const walletToFundBalance = await this.getBalanceOf(ctx, fundStruct["walletToFund"]);
-        await ctx.stub.putState(fundStruct["walletToFund"], Utils.toBuffer(walletToFundBalance + fundStruct["value"]));
+        await ctx.stub.putState(fundStruct["walletToFund"], Utils.toBuffer(walletToFundBalance + parseFloat(fundStruct["value"])));
         fundStruct["status"] = "Executed";
-        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(bufferedFundStruct)));
+        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(fundStruct)));
         return true;
     }
     async rejectFund(ctx, operationId, reason){
@@ -240,7 +240,7 @@ class eip19 extends Contract{
         }
         fundStruct["status"] = "Rejected";
         fundStruct["reason"] = reason;
-        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(bufferedFundStruct)));
+        await ctx.stub.putState(operationId, Utils.toBuffer(JSON.stringify(fundStruct)));
         return true;
     }
     async isFundOperatorFor(ctx, walletOwnerId, ordererId){
