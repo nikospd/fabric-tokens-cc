@@ -1,3 +1,14 @@
+/* Payoutable Token
+The fund order struct
+     operationId: {
+       issuerId,
+       walletToBePaidOut,
+       value,
+       instructions,
+       status
+    }
+*/
+
 'use strict';
 
 const {Contract} = require("fabric-contract-api");
